@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SamanthaOrchestrationSimulator.vcxproj" Id="80e0caba-031e-454d-b6c9-a4a3c4967649" />
+</Solution>
