@@ -19,21 +19,19 @@ Each week I will summarize my milestone activity and progress by writing a stand
 🔮 Next Steps - What I plan to prioritize and do next
 
 <br>
-
 ### Week 1
 **Overview:**  
-This week I set up my GitHub repository and Project board and started building my SAMANTHA Orchestration Simulator in C++. I created my initial Issues and started working on the Task class.
+This week I set up my GitHub repository, Project board, Issues, and development environment for the SAMANTHA Orchestration Simulator. I created the Task, Agent, and Orchestrator classes and built a working menu that lets the user create a task, view the task and agent, and assign the task to an available agent.
 <br>
 **Challenges:**  
 The biggest challenge this week was getting GitHub and Visual Studio to work together correctly. I had problems with authentication, cloning the private repository, and getting Git to ignore files created by Visual Studio. It took some time to figure out, but I got everything working.
 <br>
 **Accomplishments:**  
-I learned quite a bit about GitHub this week. I understand branches, Issues, Project boards, and commits better than I did when I started.
+I learned quite a bit about GitHub this week and understand branches, Issues, Project boards, and commits better than I did when I started. I also got the first working version of the simulator running. The Orchestrator can now assign a Task to an Agent and update both of their states.
 <br>
 **Next Steps:**  
-Next I want to finish the Task class and start working on the Agent and Orchestrator classes. After that I want to get the main program loop working so the different parts can start working together.
+Next week I want to add more functionality to the simulator, improve input validation, and start expanding the orchestration system beyond a single task and agent.
 <br>
-
 ### Week 2
 
 My next stand up will go here...
