@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Task.h"
 #include "Agent.h"
+#include "Orchestrator.h"
 int main()
 {
     Task testTask;
@@ -18,5 +19,11 @@ int main()
     std::cout << "Agent Name: " << testAgent.GetName() << '\n';
     std::cout << "Specialty: " << testAgent.GetSpecialty() << '\n';
     std::cout << "Available: " << testAgent.GetAvailable() << '\n';
+    std::cout << '\n';
+    Orchestrator testOrchestrator;
+    bool assigned = testOrchestrator.AssignTask(testTask, testAgent);
+    std::cout << "Task Assigned: " << assigned << '\n';
+    std::cout << "Task Status: " << testTask.GetStatus() << '\n';
+    std::cout << "Agent Available: " << testAgent.GetAvailable() << '\n';
     return 0;
 }
