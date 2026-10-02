@@ -1,30 +1,8 @@
-# 🚀 Welcome to Project & Portfolio!
-
-This repository will be used to keep track of research and development conducted in this class. Follow the instructions below to get started.
-cos
-### Getting Started
-
-**1.** Review the [About](./docs/01_about/README.md) README and all of the links it provides.
-
-**2.** Review the documentation and [Getting Started](./docs/02_getting_started/README.md) steps in this repository's docs folder.
-
-**3.** Attend the first Live Lecture to see a live setup demo. If you are unable to attend, make sure to watch the archive.
-
-### Next Steps...
-
-After completing the above steps, feel free to begin updating this readme where indicated below. Remember to update this document each week to receive proper credit for the weekly Milestone assignment.
-
-<br>
-
-> ❗️ &nbsp; Now that you have read to this point, go ahead and delete this sentence and everything above it.
-
-<br>
-
 # Project & Portfolio 1
 
-### Student First & Last Name
+Mark Sublette
 
-Hello my name is [enter name]. I am a student from [where are you from?]. The purpose of this repository is to practice development using version control. This work will help me begin to build a portfolio of skills and accomplishment that can be shared in the future.
+Hello my name is Mark. I am a student from Beaumont, TX. The purpose of this repository is to practice development using version control. This work will help me begin to build a portfolio of skills and accomplishment that can be shared in the future.
 
 <br>
 
@@ -41,11 +19,19 @@ Each week I will summarize my milestone activity and progress by writing a stand
 🔮 Next Steps - What I plan to prioritize and do next
 
 <br>
-
 ### Week 1
-
-Replace this paragraph with your stand up for this week. Use the prompts above to summarize your most recent milestone activity and work.
-
+**Overview:**  
+This week I set up my GitHub repository, Project board, Issues, and development environment for the SAMANTHA Orchestration Simulator. I created the Task, Agent, and Orchestrator classes and built a working menu that lets the user create a task, view the task and agent, and assign the task to an available agent.
+<br>
+**Challenges:**  
+The biggest challenge this week was getting GitHub and Visual Studio to work together correctly. I had problems with authentication, cloning the private repository, and getting Git to ignore files created by Visual Studio. It took some time to figure out, but I got everything working.
+<br>
+**Accomplishments:**  
+I learned quite a bit about GitHub this week and understand branches, Issues, Project boards, and commits better than I did when I started. I also got the first working version of the simulator running. The Orchestrator can now assign a Task to an Agent and update both of their states.
+<br>
+**Next Steps:**  
+Next week I want to add more functionality to the simulator, improve input validation, and start expanding the orchestration system beyond a single task and agent.
+<br>
 ### Week 2
 
 My next stand up will go here...
