@@ -21,12 +21,10 @@ std::string Task::GetName() const
 {
     return name;
 }
-
 int Task::GetComplexity() const
 {
     return complexity;
 }
-
 std::string Task::GetStatus() const
 {
     return status;
