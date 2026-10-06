@@ -2,8 +2,10 @@
 
 #include "Task.h"
 #include "Agent.h"
+#include <vector>
 class Orchestrator
 {
 public:
     bool AssignTask(Task& task, Agent& agent);
+    bool AssignTaskAutomatically(Task& task, std::vector<Agent>& agents);
 };

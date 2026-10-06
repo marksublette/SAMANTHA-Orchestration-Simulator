@@ -118,36 +118,19 @@ int main()
                 std::cout << "Invalid task selection.\n";
                 break;
             }
-            std::cout << "\nSelect an agent:\n";
-            for (int i = 0; i < agents.size(); i++)
-            {
-                std::cout << i + 1 << ". "
-                    << agents[i].GetName()
-                    << " - Available: "
-                    << agents[i].GetAvailable()
-                    << '\n';
-            }
-            int agentChoice;
-            std::cout << "Enter agent number: ";
-            std::cin >> agentChoice;
-            if (agentChoice < 1 || agentChoice > agents.size())
-            {
-                std::cout << "Invalid agent selection.\n";
-                break;
-            }
-            bool assigned = orchestrator.AssignTask(
+            bool assigned = orchestrator.AssignTaskAutomatically(
                 tasks[taskChoice - 1],
-                agents[agentChoice - 1]);
+                agents);
             if (assigned)
             {
                 std::cout << "Task assigned successfully.\n";
             }
             else
             {
-                std::cout << "Task could not be assigned.\n";
+                std::cout << "Task could not be assigned. No agents are available.\n";
             }
             break;
-        }//I'm out G-Dog
+        }
         case 0:
             std::cout << "Exiting simulator.\n";
             break;
