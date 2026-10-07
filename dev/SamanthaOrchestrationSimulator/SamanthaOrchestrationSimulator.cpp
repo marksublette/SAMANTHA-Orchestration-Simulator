@@ -3,6 +3,7 @@
 #include "Agent.h"
 #include "Orchestrator.h"
 #include <vector>
+#include <limits>
 int main()
 {
     int choice = -1;//note to self in my best fat russian guy in parents basement voice, "zero bad....-1 gooooood."
@@ -33,6 +34,14 @@ int main()
         std::cout << "0. Exit\n";
         std::cout << "\nEnter selection: ";
         std::cin >> choice;
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a number from 0 to 5.\n";
+            choice = -1;
+            continue;
+        }
         switch (choice)
         {
         case 1:
@@ -45,6 +54,16 @@ int main()
             std::getline(std::cin, taskName);
             std::cout << "Enter task complexity (1-10): ";
             std::cin >> taskComplexity;
+            while (std::cin.fail() || taskComplexity < 1 || taskComplexity > 10)
+            {
+                if (std::cin.fail())
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                std::cout << "Invalid complexity. Please enter a number from 1 to 10: ";
+                std::cin >> taskComplexity;
+            }
             newTask.SetName(taskName);
             newTask.SetComplexity(taskComplexity);
             newTask.SetStatus("Waiting");
@@ -114,6 +133,13 @@ int main()
             int taskChoice;
             std::cout << "Enter task number: ";
             std::cin >> taskChoice;
+            if (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Please enter a task number.\n";
+                break;
+            }
             if (taskChoice < 1 || taskChoice > tasks.size())
             {
                 std::cout << "Invalid task selection.\n";
@@ -151,6 +177,13 @@ int main()
             int taskChoice;
             std::cout << "Enter task number: ";
             std::cin >> taskChoice;
+            if (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Please enter a task number.\n";
+                break;
+            }
             if (taskChoice < 1 || taskChoice > tasks.size())
             {
                 std::cout << "Invalid task selection.\n";
