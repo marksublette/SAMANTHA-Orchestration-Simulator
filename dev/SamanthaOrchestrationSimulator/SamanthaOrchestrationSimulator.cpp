@@ -29,6 +29,7 @@ int main()
         std::cout << "2. View Tasks\n";
         std::cout << "3. View Agents\n";
         std::cout << "4. Assign Task\n";
+        std::cout << "5. Complete Task\n";
         std::cout << "0. Exit\n";
         std::cout << "\nEnter selection: ";
         std::cin >> choice;
@@ -128,6 +129,43 @@ int main()
             else
             {
                 std::cout << "Task could not be assigned. No agents are available.\n";
+            }
+            break;
+        }
+        case 5:
+        {
+            if (tasks.empty())
+            {
+                std::cout << "No tasks have been created yet.\n";
+                break;
+            }
+            std::cout << "\nSelect a task to complete:\n";
+            for (int i = 0; i < tasks.size(); i++)
+            {
+                std::cout << i + 1 << ". "
+                    << tasks[i].GetName()
+                    << " - "
+                    << tasks[i].GetStatus()
+                    << '\n';
+            }
+            int taskChoice;
+            std::cout << "Enter task number: ";
+            std::cin >> taskChoice;
+            if (taskChoice < 1 || taskChoice > tasks.size())
+            {
+                std::cout << "Invalid task selection.\n";
+                break;
+            }
+            bool completed = orchestrator.CompleteTask(
+                tasks[taskChoice - 1],
+                agents);
+            if (completed)
+            {
+                std::cout << "Task completed successfully. Agent is available again.\n";
+            }
+            else
+            {
+                std::cout << "Task could not be completed. It must be assigned first.\n";
             }
             break;
         }

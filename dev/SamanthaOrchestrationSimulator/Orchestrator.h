@@ -8,4 +8,5 @@ class Orchestrator
 public:
     bool AssignTask(Task& task, Agent& agent);
     bool AssignTaskAutomatically(Task& task, std::vector<Agent>& agents);
+    bool CompleteTask(Task& task, std::vector<Agent>& agents);
 };

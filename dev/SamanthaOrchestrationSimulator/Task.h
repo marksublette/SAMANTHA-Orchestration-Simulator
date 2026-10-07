@@ -6,6 +6,7 @@ private:
     std::string name;
     int complexity;
     std::string status;
+    int assignedAgentIndex;
 public:
     Task();
     void SetName(const std::string& taskName);
@@ -14,4 +15,6 @@ public:
     std::string GetName() const;
     int GetComplexity() const;
     std::string GetStatus() const;
+    void SetAssignedAgentIndex(int agentIndex);
+    int GetAssignedAgentIndex() const;
 };
