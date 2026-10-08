@@ -164,3 +164,19 @@ If no → refine your plan first 
 ## 😈 Final Thought  
   
 > Plan it now… or debug it later.
+
+---
+
+## Week 2 Development Results
+
+**Features Added:**  
+→ Added support for multiple Tasks and Agents using vectors. Added automatic task assignment, Task completion, and Agent release so Agents can be reused after completing work.
+
+**Code Structure Updates:**  
+→ Expanded the Task class so a Task can remember which Agent was assigned to it. Expanded the Orchestrator so it can search the Agent collection automatically and complete Tasks while releasing the correct Agent.
+
+**Usability Improvements:**  
+→ Added input validation for the main menu, Task complexity, and Task selection. Invalid input now displays a helpful message and allows the program to recover instead of leaving the input stream in a failed state.
+
+**What Changed and Why:**  
+→ The Week 1 program was limited to one Task and one Agent. These changes allow the simulator to manage multiple objects and complete a full Task lifecycle from Waiting to Assigned to Completed. The input improvements also make the program easier and safer for someone else to use.

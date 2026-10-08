@@ -33,9 +33,14 @@ I learned quite a bit about GitHub this week and understand branches, Issues, Pr
 Next week I want to add more functionality to the simulator, improve input validation, and start expanding the orchestration system beyond a single task and agent.
 <br>
 ### Week 2
-
-My next stand up will go here...
-
+**Overview:**  
+This week I expanded the SAMANTHA Orchestration Simulator from handling one Task and Agent to handling multiple Tasks and Agents using vectors. I added automatic task assignment, task completion and Agent release, and improved input validation and user feedback.
+**Challenges:**  
+The biggest challenge was changing the program to work with multiple objects without breaking the functionality I already had. Input validation also took some testing because I wanted the program to recover correctly from both incorrect values and incorrect input types.
+**Accomplishments:**  
+I have a much better understanding of vectors, references, and how objects can interact with each other. The Orchestrator can now find an available Agent automatically, and completing a Task releases that Agent so it can be used again.
+**Next Steps:**  
+Next week I want to continue improving the orchestration logic and code organization while building on the working system I have now.
 ### Week 3
 
 Stay tuned, this stand up is coming soon...
