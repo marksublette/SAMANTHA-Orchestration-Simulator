@@ -3,7 +3,7 @@
 #include "Agent.h"
 #include "Orchestrator.h"
 #include <vector>
-#include <limits>
+#include <string>
 int main()
 {
     int choice = -1;//note to self in my best fat russian guy in parents basement voice, "zero bad....-1 gooooood."
@@ -33,11 +33,19 @@ int main()
         std::cout << "5. Complete Task\n";
         std::cout << "0. Exit\n";
         std::cout << "\nEnter selection: ";
-        std::cin >> choice;
-        if (std::cin.fail())
+        std::string input;
+        std::getline(std::cin, input);
+        try
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            size_t position = 0;
+            choice = std::stoi(input, &position);
+            if (position != input.length() || choice < 0 || choice > 5)
+            {
+                throw std::invalid_argument("Invalid menu selection");
+            }
+        }
+        catch (const std::exception&)
+        {
             std::cout << "Invalid input. Please enter a number from 0 to 5.\n";
             choice = -1;
             continue;
@@ -50,19 +58,27 @@ int main()
             int taskComplexity;
             Task newTask;
             std::cout << "Enter task name: ";
-            std::cin.ignore();
             std::getline(std::cin, taskName);
-            std::cout << "Enter task complexity (1-10): ";
-            std::cin >> taskComplexity;
-            while (std::cin.fail() || taskComplexity < 1 || taskComplexity > 10)
+            while (true)
             {
-                if (std::cin.fail())
+                std::cout << "Enter task complexity (1-10): ";
+                std::string input;
+                std::getline(std::cin, input);
+                try
                 {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    size_t position = 0;
+                    taskComplexity = std::stoi(input, &position);
+                    if (position != input.length() ||
+                        taskComplexity < 1 || taskComplexity > 10)
+                    {
+                        throw std::invalid_argument("Invalid complexity");
+                    }
+                    break;
                 }
-                std::cout << "Invalid complexity. Please enter a number from 1 to 10: ";
-                std::cin >> taskComplexity;
+                catch (const std::exception&)
+                {
+                    std::cout << "Invalid complexity. Please enter a number from 1 to 10.\n";
+                }
             }
             newTask.SetName(taskName);
             newTask.SetComplexity(taskComplexity);
@@ -132,17 +148,22 @@ int main()
             }
             int taskChoice;
             std::cout << "Enter task number: ";
-            std::cin >> taskChoice;
-            if (std::cin.fail())
+            std::string input;
+            std::getline(std::cin, input);
+            try
             {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Invalid input. Please enter a task number.\n";
-                break;
+                size_t position = 0;
+                taskChoice = std::stoi(input, &position);
+                if (position != input.length() ||
+                    taskChoice < 1 ||
+                    static_cast<size_t>(taskChoice) > tasks.size())
+                {
+                    throw std::invalid_argument("Invalid task selection");
+                }
             }
-            if (taskChoice < 1 || taskChoice > tasks.size())
+            catch (const std::exception&)
             {
-                std::cout << "Invalid task selection.\n";
+                std::cout << "Invalid task selection. Please enter a valid task number.\n";
                 break;
             }
             bool assigned = orchestrator.AssignTaskAutomatically(
@@ -176,17 +197,22 @@ int main()
             }
             int taskChoice;
             std::cout << "Enter task number: ";
-            std::cin >> taskChoice;
-            if (std::cin.fail())
+            std::string input;
+            std::getline(std::cin, input);
+            try
             {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Invalid input. Please enter a task number.\n";
-                break;
+                size_t position = 0;
+                taskChoice = std::stoi(input, &position);
+                if (position != input.length() ||
+                    taskChoice < 1 ||
+                    static_cast<size_t>(taskChoice) > tasks.size())
+                {
+                    throw std::invalid_argument("Invalid task selection");
+                }
             }
-            if (taskChoice < 1 || taskChoice > tasks.size())
+            catch (const std::exception&)
             {
-                std::cout << "Invalid task selection.\n";
+                std::cout << "Invalid task selection. Please enter a valid task number.\n";
                 break;
             }
             bool completed = orchestrator.CompleteTask(
