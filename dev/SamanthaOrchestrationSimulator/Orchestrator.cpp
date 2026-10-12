@@ -1,7 +1,7 @@
 #include "Orchestrator.h"
 bool Orchestrator::AssignTask(Task& task, Agent& agent)
 {
-    if (agent.GetAvailable())
+    if (task.GetStatus() == "Waiting" && agent.GetAvailable())
     {
         task.SetStatus("Assigned");
         agent.SetAvailable(false);
@@ -11,6 +11,10 @@ bool Orchestrator::AssignTask(Task& task, Agent& agent)
 }
 bool Orchestrator::AssignTaskAutomatically(Task& task, std::vector<Agent>& agents)
 {
+    if (task.GetStatus() != "Waiting")
+    {
+        return false;
+    }
     for (int i = 0; i < agents.size(); i++)
     {
         if (agents[i].GetAvailable())

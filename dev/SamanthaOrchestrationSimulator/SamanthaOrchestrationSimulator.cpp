@@ -173,6 +173,10 @@ int main()
             {
                 std::cout << "Task assigned successfully.\n";
             }
+            else if (tasks[taskChoice - 1].GetStatus() != "Waiting")
+            {
+                std::cout << "Task cannot be assigned because it is already Assigned or Completed.\n";
+            }
             else
             {
                 std::cout << "Task could not be assigned. No agents are available.\n";
