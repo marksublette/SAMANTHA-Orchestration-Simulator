@@ -5,6 +5,7 @@ Task::Task()
     complexity = 1;
     status = "Waiting";
     assignedAgentIndex = -1;
+    requiredSpecialty = "";
 }
 void Task::SetName(const std::string& taskName)
 {
@@ -22,6 +23,10 @@ void Task::SetAssignedAgentIndex(int agentIndex)
 {
     assignedAgentIndex = agentIndex;
 }
+void Task::SetRequiredSpecialty(const std::string& specialty)
+{
+    requiredSpecialty = specialty;
+}
 std::string Task::GetName() const
 {
     return name;
@@ -37,4 +42,8 @@ std::string Task::GetStatus() const
 int Task::GetAssignedAgentIndex() const
 {
     return assignedAgentIndex;
+}
+std::string Task::GetRequiredSpecialty() const
+{
+    return requiredSpecialty;
 }

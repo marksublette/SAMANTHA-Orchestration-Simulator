@@ -13,7 +13,7 @@ void DisplayMenu()
     std::cout << "1. Create Task\n";
     std::cout << "2. View Tasks\n";
     std::cout << "3. View Agents\n";
-    std::cout << "4. Assign Task\n";
+    std::cout << "4. Assign Tasks Automatically\n";
     std::cout << "5. Complete Task\n";
     std::cout << "0. Exit\n";
 }
@@ -90,16 +90,36 @@ int main()
     std::vector<Task> tasks;//keep it outta the loop brah, it's need to know.
     std::vector<Agent> agents;
     Orchestrator orchestrator;
-    Agent animationAgent;
-    animationAgent.SetName("Animation Agent");
-    animationAgent.SetSpecialty("Animation");
-    animationAgent.SetAvailable(true);
-    agents.push_back(animationAgent);
-    Agent imageAgent;
-    imageAgent.SetName("Image Agent");
-    imageAgent.SetSpecialty("Image Generation");
-    imageAgent.SetAvailable(true);
-    agents.push_back(imageAgent);
+    Agent basicAnimationAgent;
+    basicAnimationAgent.SetName("Basic Animation Agent");
+    basicAnimationAgent.SetSpecialty("Animation");
+    basicAnimationAgent.SetCapabilityLevel(3);
+    basicAnimationAgent.SetAvailable(true);
+    agents.push_back(basicAnimationAgent);
+    Agent advancedAnimationAgent;
+    advancedAnimationAgent.SetName("Advanced Animation Agent");
+    advancedAnimationAgent.SetSpecialty("Animation");
+    advancedAnimationAgent.SetCapabilityLevel(7);
+    advancedAnimationAgent.SetAvailable(true);
+    agents.push_back(advancedAnimationAgent);
+    Agent expertAnimationAgent;
+    expertAnimationAgent.SetName("Expert Animation Agent");
+    expertAnimationAgent.SetSpecialty("Animation");
+    expertAnimationAgent.SetCapabilityLevel(10);
+    expertAnimationAgent.SetAvailable(true);
+    agents.push_back(expertAnimationAgent);
+    Agent basicImageAgent;
+    basicImageAgent.SetName("Basic Image Agent");
+    basicImageAgent.SetSpecialty("Image Generation");
+    basicImageAgent.SetCapabilityLevel(4);
+    basicImageAgent.SetAvailable(true);
+    agents.push_back(basicImageAgent);
+    Agent expertImageAgent;
+    expertImageAgent.SetName("Expert Image Agent");
+    expertImageAgent.SetSpecialty("Image Generation");
+    expertImageAgent.SetCapabilityLevel(10);
+    expertImageAgent.SetAvailable(true);
+    agents.push_back(expertImageAgent);
     while (choice != 0)
     {
         DisplayMenu();
@@ -128,8 +148,25 @@ int main()
             std::string taskName;
             int taskComplexity;
             Task newTask;
-            std::cout << "Enter task name: ";
-            std::getline(std::cin, taskName);
+            std::cout << "\nSelect Task type:\n";
+            std::cout << "1. Animation\n";
+            std::cout << "2. Image Generation\n";
+            std::cout << "Enter selection: ";
+            std::string taskType;
+            std::getline(std::cin, taskType);
+            while (taskType != "1" && taskType != "2")
+            {
+                std::cout << "Invalid selection. Please enter 1 or 2: ";
+                std::getline(std::cin, taskType);
+            }
+            if (taskType == "1")
+            {
+                taskName = "Animation";
+            }
+            else
+            {
+                taskName = "Image Generation";
+            }
             while (true)
             {
                 std::cout << "Enter task complexity (1-10): ";
@@ -151,8 +188,10 @@ int main()
                     std::cout << "Invalid complexity. Please enter a number from 1 to 10.\n";
                 }
             }
+            std::string requiredSpecialty = taskName;
             newTask.SetName(taskName);
             newTask.SetComplexity(taskComplexity);
+            newTask.SetRequiredSpecialty(requiredSpecialty);
             newTask.SetStatus("Waiting");
             tasks.push_back(newTask);
             std::cout << "Task created.\n";
@@ -172,35 +211,46 @@ int main()
         {
             if (tasks.empty())
             {
-                std::cout << "No tasks are available to assign.\n";
+                std::cout << "No tasks have been created yet.\n";
                 break;
             }
-            if (agents.empty())
+            std::vector<bool> wasWaiting;
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                std::cout << "No agents are available.\n";
-                break;
+                wasWaiting.push_back(tasks[i].GetStatus() == "Waiting");
             }
-            std::cout << "\nSelect a task to assign:\n";
-            int taskIndex = SelectTask(tasks);
-            if (taskIndex == -1)
+            int assignedCount = orchestrator.AssignAllWaitingTasks(
+                tasks, agents);
+            std::cout << "\nAutomatic Assignment Results\n";
+            std::cout << "----------------------------\n";
+            std::cout << assignedCount
+                << (assignedCount == 1 ? " Task assigned.\n" : " Tasks assigned.\n");
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                break;
+                if (wasWaiting[i] && tasks[i].GetStatus() == "Assigned")
+                {
+                    int agentIndex = tasks[i].GetAssignedAgentIndex();
+                    if (agentIndex >= 0 &&
+                        static_cast<size_t>(agentIndex) < agents.size())
+                    {
+                        std::cout << "Task " << i + 1
+                            << " (" << tasks[i].GetName()
+                            << ", Complexity " << tasks[i].GetComplexity()
+                            << ") -> " << agents[agentIndex].GetName()
+                            << '\n';
+                    }
+                }
             }
-            bool assigned = orchestrator.AssignTaskAutomatically(
-                tasks[taskIndex],
-                agents);
-            if (assigned)
+            int waitingCount = 0;
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                std::cout << "Task assigned successfully.\n";
+                if (tasks[i].GetStatus() == "Waiting")
+                {
+                    waitingCount++;
+                }
             }
-            else if (tasks[taskIndex].GetStatus() != "Waiting")
-            {
-                std::cout << "Task cannot be assigned because it is already Assigned or Completed.\n";
-            }
-            else
-            {
-                std::cout << "Task could not be assigned. No agents are available.\n";
-            }
+            std::cout << waitingCount
+                << (waitingCount == 1 ? " Task remaining.\n" : " Tasks remaining.\n");
             break;
         }
         case 5:

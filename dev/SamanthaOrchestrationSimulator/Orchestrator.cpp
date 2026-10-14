@@ -15,17 +15,47 @@ bool Orchestrator::AssignTaskAutomatically(Task& task, std::vector<Agent>& agent
     {
         return false;
     }
-    for (int i = 0; i < agents.size(); i++)
+    int bestAgentIndex = -1;
+    for (size_t i = 0; i < agents.size(); i++)
     {
-        if (agents[i].GetAvailable())
+        if (agents[i].GetAvailable() &&
+            agents[i].GetSpecialty() == task.GetRequiredSpecialty() &&
+            agents[i].GetCapabilityLevel() >= task.GetComplexity())
         {
-            task.SetStatus("Assigned");
-            task.SetAssignedAgentIndex(i);
-            agents[i].SetAvailable(false);
-            return true;
+            if (bestAgentIndex == -1 ||
+                agents[i].GetCapabilityLevel() <
+                agents[bestAgentIndex].GetCapabilityLevel())
+            {
+                bestAgentIndex = static_cast<int>(i);
+            }
         }
     }
-    return false;
+    if (bestAgentIndex == -1)
+    {
+        return false;
+    }
+    task.SetStatus("Assigned");
+    task.SetAssignedAgentIndex(bestAgentIndex);
+    agents[bestAgentIndex].SetAvailable(false);
+    return true;
+}
+int Orchestrator::AssignAllWaitingTasks(
+    std::vector<Task>& tasks,
+    std::vector<Agent>& agents)
+{
+    int assignedCount = 0;
+    for (size_t i = 0; i < tasks.size(); i++)
+    {
+        if (tasks[i].GetStatus() == "Waiting")
+        {
+            bool assigned = AssignTaskAutomatically(tasks[i], agents);
+            if (assigned)
+            {
+                assignedCount++;
+            }
+        }
+    }
+    return assignedCount;
 }
 bool Orchestrator::CompleteTask(Task& task, std::vector<Agent>& agents)
 {
