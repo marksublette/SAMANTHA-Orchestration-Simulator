@@ -42,8 +42,19 @@ I have a much better understanding of vectors, references, and how objects can i
 **Next Steps:**  
 Next week I want to continue improving the orchestration logic and code organization while building on the working system I have now.
 ### Week 3
+**Week 3 End-of-Week Stand-Up — SAMANTHA Orchestration Simulator**
 
-Stay tuned, this stand up is coming soon...
+**Overview:** This week I focused on improving the reliability, organization, and functionality of my simulator. I started by addressing the feedback from Milestone 2 and then expanded the Orchestrator's decision-making capabilities.
+
+**Improvements:** I replaced the old input validation with getline(), stoi(), and try/catch. I also fixed the issue where Tasks could be assigned multiple times. I refactored the main menu into smaller functions to make the code easier to read and maintain.
+
+The biggest improvement was expanding automatic Task assignment. Users now select a Task type and complexity level, and the Orchestrator evaluates Agent specialties, capability ratings, and availability to choose the best-qualified Agent. It can also assign multiple waiting Tasks automatically with one menu selection.
+
+**Challenges:** One challenge was understanding why refactoring working code was necessary. I learned that improving code organization isn't necessarily about making a program faster, but about making it easier to maintain and expand. I also had to troubleshoot specialty matching and make sure Agents were released correctly after completing Tasks.
+
+**Feedback:** Kari recommended improving input validation and preventing duplicate Task assignments. I implemented and tested both corrections. Her feedback helped me focus on reliability before adding more functionality.
+
+**Next Steps:** My focus for Week 4 is completing final testing, fixing any remaining bugs, improving documentation, and preparing the simulator for delivery and my portfolio.
 
 ### Week 4
 

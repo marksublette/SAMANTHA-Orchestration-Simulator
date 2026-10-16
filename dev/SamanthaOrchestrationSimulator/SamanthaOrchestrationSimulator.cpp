@@ -3,41 +3,140 @@
 #include "Agent.h"
 #include "Orchestrator.h"
 #include <vector>
-#include <limits>
+#include <string>
+void DisplayMenu()
+{
+    std::cout << "\n";
+    std::cout << "========================================\n";
+    std::cout << "   SAMANTHA ORCHESTRATION SIMULATOR\n";
+    std::cout << "========================================\n";
+    std::cout << "1. Create Task\n";
+    std::cout << "2. View Tasks\n";
+    std::cout << "3. View Agents\n";
+    std::cout << "4. Assign Tasks Automatically\n";
+    std::cout << "5. Complete Task\n";
+    std::cout << "0. Exit\n";
+}
+void DisplayTasks(const std::vector<Task>& tasks)
+{
+    if (tasks.empty())
+    {
+        std::cout << "\nNo tasks have been created yet.\n";
+    }
+    else
+    {
+        std::cout << "\nTasks:\n";
+        for (size_t i = 0; i < tasks.size(); i++)
+        {
+            std::cout << "\nTask " << i + 1 << '\n';
+            std::cout << "Name: " << tasks[i].GetName() << '\n';
+            std::cout << "Complexity: " << tasks[i].GetComplexity() << '\n';
+            std::cout << "Status: " << tasks[i].GetStatus() << '\n';
+        }
+    }
+}
+void DisplayAgents(const std::vector<Agent>& agents)
+{
+    if (agents.empty())
+    {
+        std::cout << "\nNo agents are available.\n";
+    }
+    else
+    {
+        std::cout << "\nAgents:\n";
+        for (size_t i = 0; i < agents.size(); i++)
+        {
+            std::cout << "\nAgent " << i + 1 << '\n';
+            std::cout << "Name: " << agents[i].GetName() << '\n';
+            std::cout << "Specialty: " << agents[i].GetSpecialty() << '\n';
+            std::cout << "Available: " << agents[i].GetAvailable() << '\n';
+        }
+    }
+}
+int SelectTask(const std::vector<Task>& tasks)
+{
+    for (size_t i = 0; i < tasks.size(); i++)
+    {
+        std::cout << i + 1 << ". "
+            << tasks[i].GetName()
+            << " - "
+            << tasks[i].GetStatus()
+            << '\n';
+    }
+    std::cout << "Enter task number: ";
+    std::string input;
+    std::getline(std::cin, input);
+    try
+    {
+        size_t position = 0;
+        int taskChoice = std::stoi(input, &position);
+        if (position != input.length() ||
+            taskChoice < 1 ||
+            static_cast<size_t>(taskChoice) > tasks.size())
+        {
+            throw std::invalid_argument("Invalid task selection");
+        }
+        return taskChoice - 1;
+    }
+    catch (const std::exception&)
+    {
+        std::cout << "Invalid task selection. Please enter a valid task number.\n";
+        return -1;
+    }
+}
 int main()
 {
     int choice = -1;//note to self in my best fat russian guy in parents basement voice, "zero bad....-1 gooooood."
     std::vector<Task> tasks;//keep it outta the loop brah, it's need to know.
     std::vector<Agent> agents;
     Orchestrator orchestrator;
-    Agent animationAgent;
-    animationAgent.SetName("Animation Agent");
-    animationAgent.SetSpecialty("Animation");
-    animationAgent.SetAvailable(true);
-    agents.push_back(animationAgent);
-    Agent imageAgent;
-    imageAgent.SetName("Image Agent");
-    imageAgent.SetSpecialty("Image Generation");
-    imageAgent.SetAvailable(true);
-    agents.push_back(imageAgent);
+    Agent basicAnimationAgent;
+    basicAnimationAgent.SetName("Basic Animation Agent");
+    basicAnimationAgent.SetSpecialty("Animation");
+    basicAnimationAgent.SetCapabilityLevel(3);
+    basicAnimationAgent.SetAvailable(true);
+    agents.push_back(basicAnimationAgent);
+    Agent advancedAnimationAgent;
+    advancedAnimationAgent.SetName("Advanced Animation Agent");
+    advancedAnimationAgent.SetSpecialty("Animation");
+    advancedAnimationAgent.SetCapabilityLevel(7);
+    advancedAnimationAgent.SetAvailable(true);
+    agents.push_back(advancedAnimationAgent);
+    Agent expertAnimationAgent;
+    expertAnimationAgent.SetName("Expert Animation Agent");
+    expertAnimationAgent.SetSpecialty("Animation");
+    expertAnimationAgent.SetCapabilityLevel(10);
+    expertAnimationAgent.SetAvailable(true);
+    agents.push_back(expertAnimationAgent);
+    Agent basicImageAgent;
+    basicImageAgent.SetName("Basic Image Agent");
+    basicImageAgent.SetSpecialty("Image Generation");
+    basicImageAgent.SetCapabilityLevel(4);
+    basicImageAgent.SetAvailable(true);
+    agents.push_back(basicImageAgent);
+    Agent expertImageAgent;
+    expertImageAgent.SetName("Expert Image Agent");
+    expertImageAgent.SetSpecialty("Image Generation");
+    expertImageAgent.SetCapabilityLevel(10);
+    expertImageAgent.SetAvailable(true);
+    agents.push_back(expertImageAgent);
     while (choice != 0)
     {
-        std::cout << "\n";
-        std::cout << "========================================\n";
-        std::cout << "   SAMANTHA ORCHESTRATION SIMULATOR\n";
-        std::cout << "========================================\n";
-        std::cout << "1. Create Task\n";
-        std::cout << "2. View Tasks\n";
-        std::cout << "3. View Agents\n";
-        std::cout << "4. Assign Task\n";
-        std::cout << "5. Complete Task\n";
-        std::cout << "0. Exit\n";
+        DisplayMenu();
         std::cout << "\nEnter selection: ";
-        std::cin >> choice;
-        if (std::cin.fail())
+        std::string input;
+        std::getline(std::cin, input);
+        try
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            size_t position = 0;
+            choice = std::stoi(input, &position);
+            if (position != input.length() || choice < 0 || choice > 5)
+            {
+                throw std::invalid_argument("Invalid menu selection");
+            }
+        }
+        catch (const std::exception&)
+        {
             std::cout << "Invalid input. Please enter a number from 0 to 5.\n";
             choice = -1;
             continue;
@@ -49,23 +148,50 @@ int main()
             std::string taskName;
             int taskComplexity;
             Task newTask;
-            std::cout << "Enter task name: ";
-            std::cin.ignore();
-            std::getline(std::cin, taskName);
-            std::cout << "Enter task complexity (1-10): ";
-            std::cin >> taskComplexity;
-            while (std::cin.fail() || taskComplexity < 1 || taskComplexity > 10)
+            std::cout << "\nSelect Task type:\n";
+            std::cout << "1. Animation\n";
+            std::cout << "2. Image Generation\n";
+            std::cout << "Enter selection: ";
+            std::string taskType;
+            std::getline(std::cin, taskType);
+            while (taskType != "1" && taskType != "2")
             {
-                if (std::cin.fail())
-                {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-                std::cout << "Invalid complexity. Please enter a number from 1 to 10: ";
-                std::cin >> taskComplexity;
+                std::cout << "Invalid selection. Please enter 1 or 2: ";
+                std::getline(std::cin, taskType);
             }
+            if (taskType == "1")
+            {
+                taskName = "Animation";
+            }
+            else
+            {
+                taskName = "Image Generation";
+            }
+            while (true)
+            {
+                std::cout << "Enter task complexity (1-10): ";
+                std::string input;
+                std::getline(std::cin, input);
+                try
+                {
+                    size_t position = 0;
+                    taskComplexity = std::stoi(input, &position);
+                    if (position != input.length() ||
+                        taskComplexity < 1 || taskComplexity > 10)
+                    {
+                        throw std::invalid_argument("Invalid complexity");
+                    }
+                    break;
+                }
+                catch (const std::exception&)
+                {
+                    std::cout << "Invalid complexity. Please enter a number from 1 to 10.\n";
+                }
+            }
+            std::string requiredSpecialty = taskName;
             newTask.SetName(taskName);
             newTask.SetComplexity(taskComplexity);
+            newTask.SetRequiredSpecialty(requiredSpecialty);
             newTask.SetStatus("Waiting");
             tasks.push_back(newTask);
             std::cout << "Task created.\n";
@@ -73,89 +199,58 @@ int main()
         }
         case 2:
         {
-            if (tasks.empty())
-            {
-                std::cout << "\nNo tasks have been created yet.\n";
-            }
-            else
-            {
-                std::cout << "\nTasks:\n";
-                for (int i = 0; i < tasks.size(); i++)
-                {
-                    std::cout << "\nTask " << i + 1 << '\n';
-                    std::cout << "Name: " << tasks[i].GetName() << '\n';
-                    std::cout << "Complexity: " << tasks[i].GetComplexity() << '\n';
-                    std::cout << "Status: " << tasks[i].GetStatus() << '\n';
-                }
-            }
+            DisplayTasks(tasks);
             break;
         }
         case 3:
         {
-            if (agents.empty())
-            {
-                std::cout << "\nNo agents are available.\n";
-            }
-            else
-            {
-                std::cout << "\nAgents:\n";
-                for (int i = 0; i < agents.size(); i++)
-                {
-                    std::cout << "\nAgent " << i + 1 << '\n';
-                    std::cout << "Name: " << agents[i].GetName() << '\n';
-                    std::cout << "Specialty: " << agents[i].GetSpecialty() << '\n';
-                    std::cout << "Available: " << agents[i].GetAvailable() << '\n';
-                }
-            }
+            DisplayAgents(agents);
             break;
         }
         case 4:
         {
             if (tasks.empty())
             {
-                std::cout << "No tasks are available to assign.\n";
+                std::cout << "No tasks have been created yet.\n";
                 break;
             }
-            if (agents.empty())
+            std::vector<bool> wasWaiting;
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                std::cout << "No agents are available.\n";
-                break;
+                wasWaiting.push_back(tasks[i].GetStatus() == "Waiting");
             }
-            std::cout << "\nSelect a task to assign:\n";
-            for (int i = 0; i < tasks.size(); i++)
+            int assignedCount = orchestrator.AssignAllWaitingTasks(
+                tasks, agents);
+            std::cout << "\nAutomatic Assignment Results\n";
+            std::cout << "----------------------------\n";
+            std::cout << assignedCount
+                << (assignedCount == 1 ? " Task assigned.\n" : " Tasks assigned.\n");
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                std::cout << i + 1 << ". "
-                    << tasks[i].GetName()
-                    << " - "
-                    << tasks[i].GetStatus()
-                    << '\n';
+                if (wasWaiting[i] && tasks[i].GetStatus() == "Assigned")
+                {
+                    int agentIndex = tasks[i].GetAssignedAgentIndex();
+                    if (agentIndex >= 0 &&
+                        static_cast<size_t>(agentIndex) < agents.size())
+                    {
+                        std::cout << "Task " << i + 1
+                            << " (" << tasks[i].GetName()
+                            << ", Complexity " << tasks[i].GetComplexity()
+                            << ") -> " << agents[agentIndex].GetName()
+                            << '\n';
+                    }
+                }
             }
-            int taskChoice;
-            std::cout << "Enter task number: ";
-            std::cin >> taskChoice;
-            if (std::cin.fail())
+            int waitingCount = 0;
+            for (size_t i = 0; i < tasks.size(); i++)
             {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Invalid input. Please enter a task number.\n";
-                break;
+                if (tasks[i].GetStatus() == "Waiting")
+                {
+                    waitingCount++;
+                }
             }
-            if (taskChoice < 1 || taskChoice > tasks.size())
-            {
-                std::cout << "Invalid task selection.\n";
-                break;
-            }
-            bool assigned = orchestrator.AssignTaskAutomatically(
-                tasks[taskChoice - 1],
-                agents);
-            if (assigned)
-            {
-                std::cout << "Task assigned successfully.\n";
-            }
-            else
-            {
-                std::cout << "Task could not be assigned. No agents are available.\n";
-            }
+            std::cout << waitingCount
+                << (waitingCount == 1 ? " Task remaining.\n" : " Tasks remaining.\n");
             break;
         }
         case 5:
@@ -166,31 +261,13 @@ int main()
                 break;
             }
             std::cout << "\nSelect a task to complete:\n";
-            for (int i = 0; i < tasks.size(); i++)
+            int taskIndex = SelectTask(tasks);
+            if (taskIndex == -1)
             {
-                std::cout << i + 1 << ". "
-                    << tasks[i].GetName()
-                    << " - "
-                    << tasks[i].GetStatus()
-                    << '\n';
-            }
-            int taskChoice;
-            std::cout << "Enter task number: ";
-            std::cin >> taskChoice;
-            if (std::cin.fail())
-            {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Invalid input. Please enter a task number.\n";
-                break;
-            }
-            if (taskChoice < 1 || taskChoice > tasks.size())
-            {
-                std::cout << "Invalid task selection.\n";
                 break;
             }
             bool completed = orchestrator.CompleteTask(
-                tasks[taskChoice - 1],
+                tasks[taskIndex],
                 agents);
             if (completed)
             {

@@ -6,6 +6,7 @@ private:
     std::string name;
     std::string specialty;
     bool available;
+    int capabilityLevel;
 public:
     Agent();
     void SetName(const std::string& agentName);
@@ -14,4 +15,6 @@ public:
     std::string GetName() const;
     std::string GetSpecialty() const;
     bool GetAvailable() const;
+    void SetCapabilityLevel(int level);
+    int GetCapabilityLevel() const;
 };
