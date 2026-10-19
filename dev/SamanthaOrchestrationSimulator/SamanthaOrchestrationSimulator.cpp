@@ -17,7 +17,7 @@ void DisplayMenu()
     std::cout << "5. Complete Task\n";
     std::cout << "0. Exit\n";
 }
-void DisplayTasks(const std::vector<Task>& tasks)
+void DisplayTasks(const std::vector<Task>& tasks, const std::vector<Agent>& agents)
 {
     if (tasks.empty())
     {
@@ -32,6 +32,14 @@ void DisplayTasks(const std::vector<Task>& tasks)
             std::cout << "Name: " << tasks[i].GetName() << '\n';
             std::cout << "Complexity: " << tasks[i].GetComplexity() << '\n';
             std::cout << "Status: " << tasks[i].GetStatus() << '\n';
+            int agentIndex = tasks[i].GetAssignedAgentIndex();
+            if (tasks[i].GetStatus() == "Assigned" &&
+                agentIndex >= 0 &&
+                static_cast<size_t>(agentIndex) < agents.size())
+            {
+                std::cout << "Assigned Agent: "
+                    << agents[agentIndex].GetName() << '\n';
+            }
         }
     }
 }
@@ -49,7 +57,10 @@ void DisplayAgents(const std::vector<Agent>& agents)
             std::cout << "\nAgent " << i + 1 << '\n';
             std::cout << "Name: " << agents[i].GetName() << '\n';
             std::cout << "Specialty: " << agents[i].GetSpecialty() << '\n';
-            std::cout << "Available: " << agents[i].GetAvailable() << '\n';
+            std::cout << "Capability Level: " << agents[i].GetCapabilityLevel() << "/10\n";
+            std::cout << "Status: "
+                << (agents[i].GetAvailable() ? "Available" : "Busy")
+                << '\n';
         }
     }
 }
@@ -199,7 +210,7 @@ int main()
         }
         case 2:
         {
-            DisplayTasks(tasks);
+            DisplayTasks(tasks, agents);
             break;
         }
         case 3:
