@@ -262,6 +262,23 @@ int main()
             }
             std::cout << waitingCount
                 << (waitingCount == 1 ? " Task remaining.\n" : " Tasks remaining.\n");
+            if (waitingCount > 0)
+            {
+                std::cout << "\nWaiting Tasks:\n";
+                for (size_t i = 0; i < tasks.size(); i++)
+                {
+                    if (tasks[i].GetStatus() == "Waiting")
+                    {
+                        std::cout << "Task " << i + 1
+                            << " (" << tasks[i].GetName()
+                            << ", Complexity " << tasks[i].GetComplexity()
+                            << "): "
+                            << orchestrator.GetAssignmentFailureReason(
+                                tasks[i], agents)
+                            << '\n';
+                    }
+                }
+            }
             break;
         }
         case 5:

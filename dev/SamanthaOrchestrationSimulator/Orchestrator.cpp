@@ -39,6 +39,33 @@ bool Orchestrator::AssignTaskAutomatically(Task& task, std::vector<Agent>& agent
     agents[bestAgentIndex].SetAvailable(false);
     return true;
 }
+std::string Orchestrator::GetAssignmentFailureReason(
+    const Task& task,
+    const std::vector<Agent>& agents) const
+{
+    bool specialtyFound = false;
+    bool qualifiedAgentFound = false;
+    for (size_t i = 0; i < agents.size(); i++)
+    {
+        if (agents[i].GetSpecialty() == task.GetRequiredSpecialty())
+        {
+            specialtyFound = true;
+            if (agents[i].GetCapabilityLevel() >= task.GetComplexity())
+            {
+                qualifiedAgentFound = true;
+            }
+        }
+    }
+    if (!specialtyFound)
+    {
+        return "No Agent has the required specialty.";
+    }
+    if (!qualifiedAgentFound)
+    {
+        return "No Agent has sufficient capability for this Task.";
+    }
+    return "All qualified Agents are currently busy.";
+}
 int Orchestrator::AssignAllWaitingTasks(
     std::vector<Task>& tasks,
     std::vector<Agent>& agents)
