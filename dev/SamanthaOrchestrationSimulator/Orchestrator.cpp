@@ -1,14 +1,4 @@
 #include "Orchestrator.h"
-bool Orchestrator::AssignTask(Task& task, Agent& agent)
-{
-    if (task.GetStatus() == "Waiting" && agent.GetAvailable())
-    {
-        task.SetStatus("Assigned");
-        agent.SetAvailable(false);
-        return true;
-    }
-    return false;
-}
 bool Orchestrator::AssignTaskAutomatically(Task& task, std::vector<Agent>& agents)
 {
     if (task.GetStatus() != "Waiting")
