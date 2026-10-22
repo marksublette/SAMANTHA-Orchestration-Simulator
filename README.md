@@ -58,4 +58,14 @@ The biggest improvement was expanding automatic Task assignment. Users now selec
 
 ### Week 4
 
-My final stand up...
+**Milestone 4 — Final Project Stand-Up: SAMANTHA Orchestration Simulator**
+
+**Overview:** This week I focused on polishing my simulator and preparing it for final delivery. The program now manages multiple Tasks and automatically assigns them based on Agent specialty, capability, complexity, and availability.
+
+**Project Wrap-Up:** I improved the Task and Agent displays so users can see capability ratings, availability, and assigned Agents. I also added explanations for Tasks that cannot be assigned. I'm finishing the remaining validation and testing before the final submission.
+
+**Challenges:** One of my biggest challenges throughout this project was learning to organize code across multiple classes while keeping everything working as I made changes. I learned to make smaller changes, test frequently, and use GitHub to track my progress.
+
+**Biggest Takeaway:** My biggest improvement was learning GitHub and project management. I now have a much better understanding of branches, commits, Issues, Pull Requests, and Project Boards. I also understand why refactoring and testing are important.
+
+**Future Development:** If I continued developing SAMANTHA, I would expand the Agent system, add more Task categories, and explore more advanced scheduling and priority management.
